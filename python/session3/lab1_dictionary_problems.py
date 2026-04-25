@@ -2,64 +2,52 @@
 
 
 def dictionary_operations(dict1, dict2):
-    """Perform basic operations on two dictionaries.
+    """Perform basic operations on two dictionaries."""
+    merged = {**dict1, **dict2}
+    common_keys = set(dict1.keys()) & set(dict2.keys())
+    unique_keys = set(dict1.keys()) ^ set(dict2.keys())
 
-    Args:
-        dict1 (dict): First dictionary
-        dict2 (dict): Second dictionary
-
-    Returns:
-        dict: Dictionary with merged, common_keys, and unique_keys
-    """
-    # Write your solution here
+    return {
+        "merged": merged,
+        "common_keys": common_keys,
+        "unique_keys": unique_keys
+    }
 
 
 def count_word_frequency(text):
-    """Count the frequency of each word in a text string.
+    """Count the frequency of each word in a text string."""
+    words = text.split()
+    frequency = {}
 
-    Args:
-        text (str): Input text
+    for word in words:
+        frequency[word] = frequency.get(word, 0) + 1
 
-    Returns:
-        dict: Dictionary with word frequencies
-    """
-    # Write your solution here
+    return frequency
 
 
 def dictionary_filtering(students_grades):
-    """Filter students based on their grades.
-
-    Args:
-        students_grades (dict): Dictionary with student names as keys and grades as values
-
-    Returns:
-        dict: Dictionary with students who have grades >= 70
-    """
-    # Write your solution here
+    """Filter students based on their grades."""
+    return {name: grade for name, grade in students_grades.items() if grade >= 70}
 
 
 def nested_dictionary_access(nested_dict, keys_path):
-    """Access value in nested dictionary using a list of keys.
+    """Access value in nested dictionary using a list of keys."""
+    current = nested_dict
 
-    Args:
-        nested_dict (dict): Nested dictionary
-        keys_path (list): List of keys to traverse
+    for key in keys_path:
+        if isinstance(current, dict) and key in current:
+            current = current[key]
+        else:
+            return None
 
-    Returns:
-        any: Value at the specified path, or None if path doesn't exist
-    """
-    # Write your solution here
+    return current
 
 
 if __name__ == "__main__":
-    # Test cases
     print("Testing dictionary_operations...")
     result = dictionary_operations({"a": 1, "b": 2}, {"b": 3, "c": 4})
     expected = {"merged": {"a": 1, "b": 3, "c": 4}, "common_keys": {"b"}, "unique_keys": {"a", "c"}}
     assert result == expected, f"Expected {expected}, got {result}"
-    assert result["merged"] == {"a": 1, "b": 3, "c": 4}, "Merged dictionary incorrect"
-    assert result["common_keys"] == {"b"}, "Common keys incorrect"
-    assert result["unique_keys"] == {"a", "c"}, "Unique keys incorrect"
 
     print("Testing count_word_frequency...")
     result = count_word_frequency("hello world hello python world")
@@ -74,9 +62,9 @@ if __name__ == "__main__":
     print("Testing nested_dictionary_access...")
     nested = {"level1": {"level2": {"level3": "found"}}}
     result = nested_dictionary_access(nested, ["level1", "level2", "level3"])
-    assert result == "found", f"Expected 'found', got {result}"
+    assert result == "found"
 
     result = nested_dictionary_access(nested, ["level1", "nonexistent"])
-    assert result is None, f"Expected None, got {result}"
+    assert result is None
 
     print("All tests passed!")
