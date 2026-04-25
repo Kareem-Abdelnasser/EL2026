@@ -12,3 +12,4 @@ if __name__ == "__main__":
     assert count([]) == 0, "Test case failed"
     assert count([4, 5, 6, 7, 8]) == 1, "Test case failed"
     assert count([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == 1, "Test case failed"
+# test
